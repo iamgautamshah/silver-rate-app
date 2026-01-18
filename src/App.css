@@ -1,0 +1,268 @@
+@import url('https://fonts.cdnfonts.com/css/gagalin');
+
+/* --- GLOBAL RESET & BASE --- */
+* {
+  box-sizing: border-box; /* Ensures padding doesn't break widths */
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  /* Base font size for 'rem' calculations. 
+     On TV, we can scale this up to zoom the whole app. */
+  font-size: 16px; 
+}
+
+/* --- MAIN CONTAINER --- */
+.app-container {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column; 
+  justify-content: center;
+  align-items: center;
+  background-color: #f5f5f5;
+  padding: 20px;
+  overflow-x: hidden; /* Prevents side scrolling on small phones */
+}
+
+/* --- LOGO ROW (Responsive) --- */
+.logos-row {
+  display: flex;
+  align-items: center; 
+  justify-content: center;
+  gap: 5vw; /* Use Viewport Width for spacing so it shrinks on mobile */
+  margin-bottom: 2rem;
+  width: 100%;
+  max-width: 1000px;
+  flex-wrap: nowrap; /* Try to keep in one line unless very small */
+}
+
+.side-logo-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1; 
+}
+
+.side-logo-img {
+  max-width: 160px;
+  width: 100%; /* Make it responsive */
+  height: auto;
+  object-fit: contain;
+}
+
+/* Main Center Logo */
+.logo-circle {
+  width: 250px;
+  height: 250px;
+  background-color: black;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19);
+  flex-shrink: 0; /* Prevent squashing */
+  position: relative;
+  z-index: 10;
+}
+
+.logo-img {
+  width: 70%;
+  height: auto;
+}
+
+/* --- TEXT TITLES --- */
+.rate-title {
+  margin: 1rem 0 2rem 0;
+  font-family: 'Gagalin', sans-serif;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: clamp(1.5rem, 5vw, 3rem); /* Scales between 1.5rem and 3rem based on screen */
+  color: #333;
+  letter-spacing: 2px;
+  text-align: center;
+}
+
+/* --- DATES CONTAINER --- */
+.date-container {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap; /* Wraps to next line on mobile */
+  justify-content: center;
+  width: 100%;
+  max-width: 800px;
+  margin-bottom: 30px;
+}
+
+.date-box {
+  background-color: black;
+  color: white;
+  padding: 1.5rem;
+  border-radius: 15px;
+  width: 250px;
+  /* If screen is small, let box shrink but not smaller than 200px */
+  min-width: 200px; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  text-align: center;
+}
+
+.day-text {
+  font-family: 'Gagalin', sans-serif;
+  font-size: 1.5rem;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.date-text {
+  font-family: sans-serif;
+  font-size: 1rem;
+  color: #ddd;
+}
+
+/* --- RATE GRID (Responsive Table) --- */
+.rate-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2px;
+  background-color: black;
+  border: 2px solid black;
+  border-radius: 15px;
+  overflow: hidden;
+  width: 100%;
+  max-width: 800px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.span-2 {
+  grid-column: span 2;
+}
+
+.grid-header-main {
+  background-color: black;
+  color: white;
+  font-family: 'Gagalin', sans-serif;
+  text-align: center;
+  padding: 15px;
+  font-size: clamp(1rem, 3vw, 1.5rem); /* Responsive font size */
+}
+
+.grid-header-sub {
+  background-color: #333;
+  color: white;
+  font-family: sans-serif;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 10px;
+  font-size: 0.8rem;
+}
+
+.grid-value {
+  background-color: white;
+  color: black;
+  font-family: 'Gagalin', sans-serif;
+  text-align: center;
+  padding: 15px;
+  font-size: clamp(1rem, 4vw, 1.5rem); /* Ensures prices are readable on small screens */
+}
+
+/* =========================================
+   MEDIA QUERIES (The Magic)
+   ========================================= */
+
+/* 1. TABLETS & LARGE PHONES (Max width 768px) */
+@media (max-width: 768px) {
+  .logo-circle {
+    width: 180px;
+    height: 180px;
+  }
+  
+  .side-logo-img {
+    max-width: 100px;
+  }
+  
+  .logos-row {
+    gap: 15px;
+  }
+
+  .date-container {
+    gap: 10px;
+  }
+
+  .date-box {
+    width: 45%; /* Place date boxes side-by-side on tablet */
+    min-width: unset; /* Remove limit */
+    padding: 1rem;
+  }
+}
+
+/* 2. MOBILE PHONES (Max width 480px) */
+@media (max-width: 480px) {
+  /* Stack logos vertically on tiny screens */
+  .logos-row {
+    flex-wrap: wrap; 
+  }
+  
+  /* Make side logos smaller and put them below main logo or keep inline small */
+  .logo-circle {
+    width: 140px;
+    height: 140px;
+    order: 1; /* Keep main logo first visually? Or center */
+  }
+
+  .side-logo-wrapper {
+    order: 2; /* Put side logos below if wrapping */
+  }
+
+  .side-logo-img {
+    max-width: 80px;
+  }
+  
+  /* Make Date boxes full width */
+  .date-box {
+    width: 100%; 
+  }
+
+  /* Adjust Table Text for tiny screens */
+  .grid-header-sub {
+    font-size: 0.6rem;
+    padding: 5px;
+  }
+  
+  .grid-value {
+    padding: 10px 5px;
+  }
+}
+
+/* 3. SMART TVs & 4K SCREENS (Min width 1920px) */
+@media (min-width: 1920px) {
+  /* Scale everything UP for TV viewing distance */
+  html {
+    font-size: 24px; /* Increases 1rem size everywhere */
+  }
+
+  .app-container {
+    padding: 50px;
+  }
+  
+  .logo-circle {
+    width: 350px;
+    height: 350px;
+  }
+
+  .side-logo-img {
+    max-width: 250px;
+  }
+
+  .rate-grid {
+    max-width: 1200px;
+    border-width: 4px;
+    gap: 4px;
+  }
+}
