@@ -128,5 +128,8 @@ app.get('/api/rates', (req, res) => {
     });
 });
 
-const PORT = 5000;
-app.listen(PORT, () => console.log(`Backend Server running on http://localhost:${PORT}`));
+// --- DEPLOYMENT UPDATE ---
+// Use the port Render assigns, or 5000 if on localhost
+const PORT = process.env.PORT || 5000; 
+
+app.listen(PORT, () => console.log(`Backend Server running on port ${PORT}`));

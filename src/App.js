@@ -45,7 +45,12 @@ function App() {
     // --- FETCH PRICE ---
     const fetchRates = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/rates');
+        // Use the Cloud URL if available, otherwise use Localhost
+        const apiUrl = process.env.REACT_APP_API_URL 
+          ? `${process.env.REACT_APP_API_URL}/api/rates`
+          : 'http://localhost:5000/api/rates';
+
+        const response = await axios.get(apiUrl);
         setRates(response.data);
       } catch (error) {
         console.error("Error fetching rates", error);
