@@ -3,7 +3,11 @@ import axios from 'axios';
 import './App.css';
 import logo from './logo.png';
 import fenegosidaLogo from './fenogosida.png';
-import kagosidaLogo from './kagosida.png'; // IMPORT NEW RIGHT LOGO
+import kagosidaLogo from './kagosida.png';
+
+// --- FIX: Define this OUTSIDE the component ---
+// This prevents the "missing dependency" error during deployment.
+const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
 function App() {
   const [dates, setDates] = useState({
@@ -18,8 +22,6 @@ function App() {
     gramBuy: 'Loading...'
   });
 
-  const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-
   useEffect(() => {
     // --- DATE LOGIC ---
     const updateDates = () => {
@@ -31,7 +33,7 @@ function App() {
         const engDay = daysOfWeek[nepalTime.getDay()];
         const engDate = nepalTime.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
         
-        // Placeholder for Nepali Date (Use library if needed)
+        // Placeholder for Nepali Date logic
         const nepDay = daysOfWeek[nepalTime.getDay()]; 
         const nepDate = "21 Poush 2082"; 
 
@@ -45,11 +47,10 @@ function App() {
     // --- FETCH PRICE ---
     const fetchRates = async () => {
       try {
-        // Use the Cloud URL if available, otherwise use Localhost
         const apiUrl = process.env.REACT_APP_API_URL 
           ? `${process.env.REACT_APP_API_URL}/api/rates`
           : 'http://localhost:5000/api/rates';
-
+          
         const response = await axios.get(apiUrl);
         setRates(response.data);
       } catch (error) {
@@ -57,7 +58,7 @@ function App() {
       }
     };
     fetchRates();
-  }, []);
+  }, []); // Dependency array remains empty, which is now correct.
 
   return (
     <div className="app-container">
