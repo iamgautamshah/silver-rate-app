@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import NepaliDate from 'nepali-date-converter'; // RESTORED THIS IMPORT
 import './App.css';
 import logo from './logo.png';
 import fenegosidaLogo from './fenogosida.png';
 import kagosidaLogo from './kagosida.png';
 
-// --- FIX: Define this OUTSIDE the component ---
-// This prevents the "missing dependency" error during deployment.
+// Defined outside to satisfy build rules
 const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
 function App() {
@@ -23,19 +23,21 @@ function App() {
   });
 
   useEffect(() => {
-    // --- DATE LOGIC ---
+    // --- DATE LOGIC (FIXED) ---
     const updateDates = () => {
         const now = new Date();
-        const utcTime = now.getTime() + (now.getTimezoneOffset() * 60000);
-        const nepalOffset = 5.75 * 60 * 60 * 1000;
-        const nepalTime = new Date(utcTime + nepalOffset);
-
-        const engDay = daysOfWeek[nepalTime.getDay()];
-        const engDate = nepalTime.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
         
-        // Placeholder for Nepali Date logic
-        const nepDay = daysOfWeek[nepalTime.getDay()]; 
-        const nepDate = "21 Poush 2082"; 
+        // 1. English Date
+        const engDay = daysOfWeek[now.getDay()];
+        const engDate = now.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
+
+        // 2. Nepali Date (Automatic Conversion)
+        // We use the library to convert 'now' directly to Nepali
+        const nepaliDateObj = new NepaliDate(now);
+        
+        // Format: 'DD MMMM YYYY' (e.g., "07 Poush 2081")
+        const nepDate = nepaliDateObj.format('DD MMMM YYYY');
+        const nepDay = daysOfWeek[nepaliDateObj.getDay()]; 
 
         setDates({
             english: { day: engDay, date: engDate },
@@ -58,7 +60,7 @@ function App() {
       }
     };
     fetchRates();
-  }, []); // Dependency array remains empty, which is now correct.
+  }, []);
 
   return (
     <div className="app-container">
