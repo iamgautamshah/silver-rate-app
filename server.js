@@ -11,10 +11,15 @@ app.use(cors());
 //Path to your database file
 const DB_FILE = path.join(__dirname, 'database.json');
 
-// --- ⚙️ SETTINGS: UPDATE PURCHASE RULES HERE ⚙️ ---
-// Change this value to match the new Nepal Silver Rule.
-// Current Rule: Deduct 4% from the Market Rate.
-const DEDUCTION_PERCENTAGE = 0.04; // 4% = 0.04
+// --- ⚙️ SETTINGS ⚙️ ---
+const DEDUCTION_PERCENTAGE = 0.04; // 4% Deduction for Purchase
+
+// --- HELPER: ROUNDING RULES ---
+// 1. Tola: Round to nearest whole number (e.g., 5683.2 -> 5683)
+const cleanTola = (num) => Math.round(num);
+
+// 2. 10 Grams: Round to nearest 0.50 (e.g., 4872.48 -> 4872.50)
+const cleanGram = (num) => Math.round(num * 2) / 2;
 
 // ---------------------------------------------------------
 
@@ -25,7 +30,6 @@ let cachedData = {
     updatedAt: new Date().toISOString()
 };
 
-// Load existing data on startup
 if (fs.existsSync(DB_FILE)) {
     try {
         cachedData = JSON.parse(fs.readFileSync(DB_FILE));
@@ -49,14 +53,12 @@ async function fetchFenegosida() {
         const $ = cheerio.load(response.data);
         const text = $('body').text();
 
-        // Regex to capture price including decimals (e.g., 4,231.50)
         const tolaMatch = text.match(/Silver\s*per\s*1\s*Tola.*?([\d,.]+)/i);
         const gramMatch = text.match(/Silver\s*per\s*10\s*Grm.*?([\d,.]+)/i);
 
         let tola = tolaMatch ? parseFloat(tolaMatch[1].replace(/,/g, '')) : 0;
         let gram10 = gramMatch ? parseFloat(gramMatch[1].replace(/,/g, '')) : 0;
 
-        // Fallback Calculation if one is missing
         if (!tola && gram10) tola = gram10 * 1.16638;
         if (!gram10 && tola) gram10 = tola / 1.16638;
 
@@ -80,7 +82,6 @@ let isRetryActive = false;
 async function startScrapingLoop() {
     console.log("Starting Background Scraper Loop...");
     await runCycle();
-    // Check every 5 minutes
     setInterval(async () => {
         if (!isRetryActive) await runCycle();
     }, 5 * 60 * 1000); 
@@ -116,20 +117,27 @@ startScrapingLoop();
 
 // --- API ROUTE ---
 app.get('/api/rates', (req, res) => {
-    // 1. Get Sale Price (Market Rate)
-    const tolaSale = parseFloat(cachedData.tola);
-    const gramSale = parseFloat(cachedData.gram10);
+    // 1. Get Raw Data
+    let rawTolaSale = parseFloat(cachedData.tola);
+    let rawGramSale = parseFloat(cachedData.gram10);
     
-    // 2. Calculate Purchase Price using the PERCENTAGE rule
-    // Formula: Sale Price - (Sale Price * 0.04)
-    const tolaBuy = tolaSale ? (tolaSale - (tolaSale * DEDUCTION_PERCENTAGE)) : 0;
-    const gramBuy = gramSale ? (gramSale - (gramSale * DEDUCTION_PERCENTAGE)) : 0;
+    // 2. Apply Rounding Rules to SALE Price
+    const tolaSale = cleanTola(rawTolaSale);    // Round to Integer
+    const gramSale = cleanGram(rawGramSale);    // Round to nearest 0.5
+    
+    // 3. Calculate Purchase Price (4% Deduction)
+    let rawTolaBuy = tolaSale - (tolaSale * DEDUCTION_PERCENTAGE);
+    let rawGramBuy = gramSale - (gramSale * DEDUCTION_PERCENTAGE);
+
+    // 4. Apply Rounding Rules to BUY Price
+    const tolaBuy = cleanTola(rawTolaBuy);
+    const gramBuy = cleanGram(rawGramBuy);
 
     res.json({
         tolaSale: `Rs. ${tolaSale.toLocaleString(undefined, {minimumFractionDigits: 0, maximumFractionDigits: 2})}`,
         tolaBuy: `Rs. ${tolaBuy.toLocaleString(undefined, {minimumFractionDigits: 0, maximumFractionDigits: 2})}`,
-        gramSale: `Rs. ${gramSale.toLocaleString(undefined, {minimumFractionDigits: 0, maximumFractionDigits: 2})}`,
-        gramBuy: `Rs. ${gramBuy.toLocaleString(undefined, {minimumFractionDigits: 0, maximumFractionDigits: 2})}`,
+        gramSale: `Rs. ${gramSale.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`,
+        gramBuy: `Rs. ${gramBuy.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`,
         source: cachedData.source,
         lastUpdated: cachedData.updatedAt
     });
