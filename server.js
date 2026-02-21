@@ -4,6 +4,7 @@ const cheerio = require('cheerio');
 const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
+const https = require('https');
 
 const app = express();
 app.use(cors());
@@ -45,9 +46,10 @@ const saveToCache = (data) => {
 async function fetchFenegosida() {
     try {
         console.log("Attempting to fetch Fenegosida...");
-        const response = await axios.get('https://www.fenegosida.org/', {
+        const response = await axios.get('https://fenegosida.org/', {
             timeout: 20000,
-            headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)' }
+            headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)' },
+            httpsAgent: new https.Agent({ rejectUnauthorized: false })
         });
 
         const $ = cheerio.load(response.data);
