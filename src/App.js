@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import NepaliDate from 'nepali-date-converter'; // RESTORED THIS IMPORT
+import NepaliDate from 'nepali-date-converter';
 import './App.css';
 import logo from './logo.png';
 import fenegosidaLogo from './fenogosida.png';
 import kagosidaLogo from './kagosida.png';
 
-// Defined outside to satisfy build rules
 const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
 function App() {
@@ -23,19 +22,14 @@ function App() {
   });
 
   useEffect(() => {
-    // --- DATE LOGIC (FIXED) ---
+    // --- DATE LOGIC ---
     const updateDates = () => {
         const now = new Date();
         
-        // 1. English Date
         const engDay = daysOfWeek[now.getDay()];
         const engDate = now.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
 
-        // 2. Nepali Date (Automatic Conversion)
-        // We use the library to convert 'now' directly to Nepali
         const nepaliDateObj = new NepaliDate(now);
-        
-        // Format: 'DD MMMM YYYY' (e.g., "07 Poush 2081")
         const nepDate = nepaliDateObj.format('DD MMMM YYYY');
         const nepDay = daysOfWeek[nepaliDateObj.getDay()]; 
 
@@ -63,54 +57,52 @@ function App() {
   }, []);
 
   return (
-    <div className="app-container">
-      
-      {/* HEADER: 3 LOGOS ROW */}
-      <div className="logos-row">
+    <div className="app-wrapper">
+      <div className="glass-container">
         
-        {/* LEFT: Fenegosida */}
-        <div className="side-logo-wrapper">
-          <img src={fenegosidaLogo} className="side-logo-img" alt="Fenegosida" />
+        {/* HEADER: 3 LOGOS ROW */}
+        <div className="logos-row">
+          <div className="side-logo-wrapper glass-panel">
+            <img src={fenegosidaLogo} className="side-logo-img" alt="Fenegosida" />
+          </div>
+
+          <div className="logo-circle glass-panel">
+            <img src={logo} className="logo-img" alt="DPPL Logo" />
+          </div>
+
+          <div className="side-logo-wrapper glass-panel">
+            <img src={kagosidaLogo} className="side-logo-img" alt="Kagosida" />
+          </div>
         </div>
 
-        {/* CENTER: Main DPPL Logo */}
-        <div className="logo-circle">
-          <img src={logo} className="logo-img" alt="DPPL Logo" />
+        <h1 className="rate-title">Today's Silver Rate</h1>
+
+        <div className="date-container">
+          <div className="date-box glass-panel">
+            <div className="day-text">{dates.nepali.day}</div>
+            <div className="date-text">{dates.nepali.date}</div>
+          </div>
+          <div className="date-box glass-panel">
+            <div className="day-text">{dates.english.day}</div>
+            <div className="date-text">{dates.english.date}</div>
+          </div>
         </div>
 
-        {/* RIGHT: Kagosida */}
-        <div className="side-logo-wrapper">
-          <img src={kagosidaLogo} className="side-logo-img" alt="Kagosida" />
+        <div className="rate-grid glass-panel">
+          <div className="grid-header-main span-2">1 TOLA</div>
+          <div className="grid-header-main span-2">10 GRAMS</div>
+
+          <div className="grid-header-sub">SALE</div>
+          <div className="grid-header-sub">PURCHASE</div>
+          <div className="grid-header-sub">SALE</div>
+          <div className="grid-header-sub">PURCHASE</div>
+
+          <div className="grid-value highlight">{rates.tolaSale}</div>
+          <div className="grid-value">{rates.tolaBuy}</div>
+          <div className="grid-value highlight">{rates.gramSale}</div>
+          <div className="grid-value">{rates.gramBuy}</div>
         </div>
-
-      </div>
-
-      <h1 className="rate-title">Today's Silver Rate</h1>
-
-      <div className="date-container">
-        <div className="date-box left-box">
-          <div className="day-text">{dates.nepali.day}</div>
-          <div className="date-text">{dates.nepali.date}</div>
-        </div>
-        <div className="date-box right-box">
-          <div className="day-text">{dates.english.day}</div>
-          <div className="date-text">{dates.english.date}</div>
-        </div>
-      </div>
-
-      <div className="rate-grid">
-        <div className="grid-header-main span-2">1 TOLA</div>
-        <div className="grid-header-main span-2">10 GRAMS</div>
-
-        <div className="grid-header-sub">SALE</div>
-        <div className="grid-header-sub">PURCHASE</div>
-        <div className="grid-header-sub">SALE</div>
-        <div className="grid-header-sub">PURCHASE</div>
-
-        <div className="grid-value">{rates.tolaSale}</div>
-        <div className="grid-value">{rates.tolaBuy}</div>
-        <div className="grid-value">{rates.gramSale}</div>
-        <div className="grid-value">{rates.gramBuy}</div>
+        
       </div>
     </div>
   );

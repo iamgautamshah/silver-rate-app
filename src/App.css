@@ -1,142 +1,150 @@
-@import url('https://fonts.cdnfonts.com/css/gagalin');
+/* Import Fredoka Font */
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&display=swap');
 
-/* --- GLOBAL RESET & BASE --- */
+/* Reset and apply font globally */
 * {
-  box-sizing: border-box; /* Ensures padding doesn't break widths */
-}
-
-body {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  /* Base font size for 'rem' calculations. 
-     On TV, we can scale this up to zoom the whole app. */
-  font-size: 16px; 
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 700; /* Forces Fredoka Bold everywhere */
 }
 
-/* --- MAIN CONTAINER --- */
-.app-container {
+/* Full screen animated background wrapper */
+.app-wrapper {
   min-height: 100vh;
   width: 100%;
   display: flex;
-  flex-direction: column; 
   justify-content: center;
   align-items: center;
-  background-color: #f5f5f5;
   padding: 20px;
-  overflow-x: hidden; /* Prevents side scrolling on small phones */
+  /* Beautiful animated gradient (Deep Purple, Blue, Silver) */
+  background: linear-gradient(-45deg, #1e1b4b, #312e81, #1e3a8a, #475569);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+  color: #ffffff;
 }
 
-/* --- LOGO ROW (Responsive) --- */
-.logos-row {
-  display: flex;
-  align-items: center; 
-  justify-content: center;
-  gap: 5vw; /* Use Viewport Width for spacing so it shrinks on mobile */
-  margin-bottom: 2rem;
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* --- THE MAIN GLASSMORPHISM CARD --- */
+.glass-container {
   width: 100%;
-  max-width: 1000px;
-  flex-wrap: nowrap; /* Try to keep in one line unless very small */
-}
-
-.side-logo-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex: 1; 
-}
-
-.side-logo-img {
-  max-width: 160px;
-  width: 100%; /* Make it responsive */
-  height: auto;
-  object-fit: contain;
-}
-
-/* Main Center Logo */
-.logo-circle {
-  width: 250px;
-  height: 250px;
-  background-color: black;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.19);
-  flex-shrink: 0; /* Prevent squashing */
-  position: relative;
-  z-index: 10;
-}
-
-.logo-img {
-  width: 150%;
-  height: 150%;
-}
-
-/* --- TEXT TITLES --- */
-.rate-title {
-  margin: 1rem 0 2rem 0;
-  font-family: 'Gagalin', sans-serif;
-  font-weight: bold;
-  text-transform: uppercase;
-  font-size: clamp(1.5rem, 5vw, 3rem); /* Scales between 1.5rem and 3rem based on screen */
-  color: #333;
-  letter-spacing: 2px;
+  max-width: 650px;
+  background: rgba(255, 255, 255, 0.05); /* Very transparent white */
+  border-radius: 24px;
+  padding: 40px;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37); /* Drop shadow for depth */
+  backdrop-filter: blur(16px); /* The frosted glass effect */
+  -webkit-backdrop-filter: blur(16px); /* Safari support */
+  border: 1px solid rgba(255, 255, 255, 0.18); /* Shiny top/left border */
   text-align: center;
 }
 
-/* --- DATES CONTAINER --- */
+/* Reusable inner glass panel style for smaller components */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* --- LOGOS --- */
+.logos-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.side-logo-wrapper {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
+
+.side-logo-img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));
+}
+
+.logo-circle {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  padding: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo-img {
+  width: 100%;
+  height: auto;
+  border-radius: 50%;
+  filter: drop-shadow(0 4px 10px rgba(0,0,0,0.4));
+}
+
+/* --- TYPOGRAPHY --- */
+.rate-title {
+  font-size: 2.5rem;
+  letter-spacing: 1.5px;
+  margin-bottom: 30px;
+  text-transform: uppercase;
+  background: linear-gradient(to right, #ffffff, #cbd5e1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0px 4px 15px rgba(255,255,255,0.2);
+}
+
+/* --- DATES --- */
 .date-container {
   display: flex;
+  justify-content: space-between;
   gap: 20px;
-  flex-wrap: wrap; /* Wraps to next line on mobile */
-  justify-content: center;
-  width: 100%;
-  max-width: 800px;
   margin-bottom: 30px;
 }
 
 .date-box {
-  background-color: black;
-  color: white;
-  padding: 1.5rem;
-  border-radius: 15px;
-  width: 250px;
-  /* If screen is small, let box shrink but not smaller than 200px */
-  min-width: 200px; 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-  text-align: center;
+  flex: 1;
+  padding: 15px;
+  transition: transform 0.3s ease;
+}
+
+.date-box:hover {
+  transform: translateY(-5px);
 }
 
 .day-text {
-  font-family: 'Gagalin', sans-serif;
-  font-size: 1.5rem;
-  margin-bottom: 5px;
+  font-size: 1.1rem;
+  color: #94a3b8; /* Light silver/blue */
   text-transform: uppercase;
-  color: #fff;
+  letter-spacing: 1px;
 }
 
 .date-text {
-  font-family: sans-serif;
-  font-size: 1rem;
-  color: #ddd;
+  font-size: 1.4rem;
+  margin-top: 5px;
+  color: #ffffff;
 }
 
-/* --- RATE GRID (Responsive Table) --- */
+/* --- RATE GRID --- */
 .rate-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 2px;
-  background-color: black;
-  border: 2px solid black;
-  border-radius: 15px;
-  overflow: hidden;
-  width: 100%;
-  max-width: 800px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  gap: 15px;
+  padding: 25px;
 }
 
 .span-2 {
@@ -144,125 +152,67 @@ body {
 }
 
 .grid-header-main {
-  background-color: black;
-  color: white;
-  font-family: 'Gagalin', sans-serif;
-  text-align: center;
-  padding: 15px;
-  font-size: clamp(1rem, 3vw, 1.5rem); /* Responsive font size */
+  font-size: 1.6rem;
+  color: #fbbf24; /* A soft gold/yellow to contrast the blue background */
+  padding-bottom: 10px;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+  margin-bottom: 10px;
 }
 
 .grid-header-sub {
-  background-color: #333;
-  color: white;
-  font-family: sans-serif;
-  font-weight: bold;
+  font-size: 1rem;
+  color: #cbd5e1;
   text-transform: uppercase;
-  text-align: center;
-  padding: 10px;
-  font-size: 0.8rem;
+  letter-spacing: 1px;
 }
 
 .grid-value {
-  background-color: white;
-  color: black;
-  font-family: 'Gagalin', sans-serif;
-  text-align: center;
-  padding: 15px;
-  font-size: clamp(1rem, 4vw, 1.5rem); /* Ensures prices are readable on small screens */
+  font-size: 1.4rem;
+  padding: 15px 5px;
+  color: #ffffff;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-/* =========================================
-   MEDIA QUERIES (The Magic)
-   ========================================= */
-
-/* 1. TABLETS & LARGE PHONES (Max width 768px) */
-@media (max-width: 768px) {
-  .logo-circle {
-    width: 180px;
-    height: 180px;
-  }
-  
-  .side-logo-img {
-    max-width: 100px;
-  }
-  
-  .logos-row {
-    gap: 15px;
-  }
-
-  .date-container {
-    gap: 10px;
-  }
-
-  .date-box {
-    width: 45%; /* Place date boxes side-by-side on tablet */
-    min-width: unset; /* Remove limit */
-    padding: 1rem;
-  }
+/* Give the 'Sale' price a slight emphasis */
+.grid-value.highlight {
+  background: rgba(255, 255, 255, 0.15);
+  color: #38bdf8; /* Light neon blue */
+  box-shadow: 0 0 15px rgba(56, 189, 248, 0.2);
 }
 
-/* 2. MOBILE PHONES (Max width 480px) */
-@media (max-width: 480px) {
-  /* Stack logos vertically on tiny screens */
-  .logos-row {
-    flex-wrap: wrap; 
+/* Responsive Design for Mobile */
+@media (max-width: 600px) {
+  .glass-container {
+    padding: 20px;
   }
   
-  /* Make side logos smaller and put them below main logo or keep inline small */
+  .rate-title {
+    font-size: 1.8rem;
+  }
+
   .logo-circle {
-    width: 140px;
-    height: 140px;
-    order: 1; /* Keep main logo first visually? Or center */
+    width: 90px;
+    height: 90px;
   }
 
   .side-logo-wrapper {
-    order: 2; /* Put side logos below if wrapping */
+    width: 60px;
+    height: 60px;
   }
 
-  .side-logo-img {
-    max-width: 80px;
-  }
-  
-  /* Make Date boxes full width */
-  .date-box {
-    width: 100%; 
+  .date-container {
+    flex-direction: column;
   }
 
-  /* Adjust Table Text for tiny screens */
-  .grid-header-sub {
-    font-size: 0.6rem;
-    padding: 5px;
+  .grid-header-main {
+    font-size: 1.3rem;
   }
-  
+
   .grid-value {
-    padding: 10px 5px;
-  }
-}
-
-/* 3. SMART TVs & 4K SCREENS (Min width 1920px) */
-@media (min-width: 1920px) {
-  /* Scale everything UP for TV viewing distance */
-  html {
-    font-size: 24px; /* Increases 1rem size everywhere */
-  }
-
-  .app-container {
-    padding: 50px;
-  }
-  
-  .logo-circle {
-    width: 350px;
-    height: 350px;
-  }
-
-  .side-logo-img {
-    max-width: 250px;
-  }
-
-  .rate-grid {
-    max-width: 1200px;
-    border-width: 4px;
-    gap: 4px;
+    font-size: 1.1rem;
   }
 }
