@@ -3,13 +3,10 @@ import axios from 'axios';
 import NepaliDate from 'nepali-date-converter';
 import './App.css';
 import logo from './logo.png';
-import fenegosidaLogo from './fenogosida.png';
-import kagosidaLogo from './kagosida.png';
 
 const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
 function App() {
-  // --- THEME STATE (Default is true = Dark Mode) ---
   const [isDarkMode, setIsDarkMode] = useState(true);
 
   const [dates, setDates] = useState({
@@ -59,13 +56,11 @@ function App() {
     fetchRates();
   }, []);
 
-  // Toggle Function
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode);
   };
 
   return (
-    // The wrapper class changes based on isDarkMode
     <div className={`app-wrapper ${isDarkMode ? 'dark-theme' : 'light-theme'}`}>
       <div className="main-container">
         
@@ -76,18 +71,10 @@ function App() {
           </button>
         </div>
 
-        {/* HEADER: 3 LOGOS ROW */}
-        <div className="logos-row">
-          <div className="side-logo-wrapper">
-            <img src={fenegosidaLogo} className="side-logo-img" alt="Fenegosida" />
-          </div>
-
+        {/* HEADER: BIG DPPL LOGO */}
+        <div className="logo-container">
           <div className="logo-circle">
             <img src={logo} className="logo-img" alt="DPPL Logo" />
-          </div>
-
-          <div className="side-logo-wrapper">
-            <img src={kagosidaLogo} className="side-logo-img" alt="Kagosida" />
           </div>
         </div>
 
@@ -119,6 +106,11 @@ function App() {
           <div className="grid-value">{rates.gramBuy}</div>
         </div>
         
+        {/* FOOTER: SOURCE TEXT */}
+        <div className="source-text">
+          SOURCE: FENEGOSIDA & KAGOSIDA
+        </div>
+
       </div>
     </div>
   );

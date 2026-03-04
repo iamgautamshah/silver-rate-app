@@ -11,25 +11,25 @@
 
 /* --- THEME VARIABLES --- */
 .dark-theme {
-  --bg-color: #0f172a;        /* Deep slate background */
-  --card-bg: #1e293b;         /* Slightly lighter slate for the card */
-  --text-main: #f8fafc;       /* Bright white text */
-  --text-sub: #94a3b8;        /* Muted grayish-blue text */
-  --accent-color: #38bdf8;    /* Bright neon blue for highlights */
-  --border-color: #334155;    /* Subtle borders */
-  --grid-bg: #0f172a;         /* Dark background for inner boxes */
-  --logo-filter: brightness(0) invert(1); /* Turns dark logos white */
+  --bg-color: #0f172a;        
+  --card-bg: #1e293b;         
+  --text-main: #f8fafc;       
+  --text-sub: #94a3b8;        
+  --accent-color: #38bdf8;    
+  --border-color: #334155;    
+  --grid-bg: #0f172a;         
+  --logo-filter: brightness(0) invert(1); 
 }
 
 .light-theme {
-  --bg-color: #f1f5f9;        /* Soft gray-blue background */
-  --card-bg: #ffffff;         /* Pure white card */
-  --text-main: #0f172a;       /* Dark slate text */
-  --text-sub: #64748b;        /* Medium gray text */
-  --accent-color: #0284c7;    /* Deep blue for highlights */
-  --border-color: #e2e8f0;    /* Soft gray borders */
-  --grid-bg: #f8fafc;         /* Very light gray for inner boxes */
-  --logo-filter: none;        /* Keeps original logo colors */
+  --bg-color: #f1f5f9;        
+  --card-bg: #ffffff;         
+  --text-main: #0f172a;       
+  --text-sub: #64748b;        
+  --accent-color: #0284c7;    
+  --border-color: #e2e8f0;    
+  --grid-bg: #f8fafc;         
+  --logo-filter: none;        
 }
 
 /* --- BASE STYLES --- */
@@ -61,7 +61,7 @@
 .theme-toggle-wrapper {
   display: flex;
   justify-content: flex-end;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .theme-toggle-btn {
@@ -79,36 +79,28 @@
   background-color: var(--border-color);
 }
 
-/* --- LOGOS --- */
-.logos-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 30px;
-}
-
-.side-logo-wrapper {
-  width: 80px;
-  height: 80px;
+/* --- LOGO --- */
+.logo-container {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 25px;
 }
 
 .logo-circle {
-  width: 120px;
-  height: 120px;
+  width: 180px; /* Made the logo significantly larger */
+  height: 180px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.side-logo-img, .logo-img {
+.logo-img {
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
   transition: filter 0.3s ease;
-  filter: var(--logo-filter); /* Magically updates based on theme */
+  filter: var(--logo-filter);
 }
 
 /* --- TYPOGRAPHY --- */
@@ -197,10 +189,19 @@
   align-items: center;
 }
 
-/* Highlight the SALE prices */
 .grid-value.highlight {
   color: var(--accent-color);
   border-color: var(--accent-color);
+}
+
+/* --- SOURCE TEXT FOOTER --- */
+.source-text {
+  margin-top: 30px;
+  font-size: 0.85rem;
+  color: var(--text-sub);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-weight: 500;
 }
 
 /* Responsive Design */
@@ -212,12 +213,8 @@
     font-size: 1.8rem;
   }
   .logo-circle {
-    width: 90px;
-    height: 90px;
-  }
-  .side-logo-wrapper {
-    width: 60px;
-    height: 60px;
+    width: 140px; /* Scales down gracefully on mobile */
+    height: 140px;
   }
   .date-container {
     flex-direction: column;
