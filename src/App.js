@@ -9,6 +9,9 @@ import kagosidaLogo from './kagosida.png';
 const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
 function App() {
+  // --- THEME STATE (Default is true = Dark Mode) ---
+  const [isDarkMode, setIsDarkMode] = useState(true);
+
   const [dates, setDates] = useState({
     english: { day: '', date: '' },
     nepali: { day: '', date: '' }
@@ -56,21 +59,34 @@ function App() {
     fetchRates();
   }, []);
 
+  // Toggle Function
+  const toggleTheme = () => {
+    setIsDarkMode(!isDarkMode);
+  };
+
   return (
-    <div className="app-wrapper">
-      <div className="glass-container">
+    // The wrapper class changes based on isDarkMode
+    <div className={`app-wrapper ${isDarkMode ? 'dark-theme' : 'light-theme'}`}>
+      <div className="main-container">
         
+        {/* THEME TOGGLE BUTTON */}
+        <div className="theme-toggle-wrapper">
+          <button className="theme-toggle-btn" onClick={toggleTheme}>
+            {isDarkMode ? '☀️ Light Mode' : '🌙 Dark Mode'}
+          </button>
+        </div>
+
         {/* HEADER: 3 LOGOS ROW */}
         <div className="logos-row">
-          <div className="side-logo-wrapper glass-panel">
+          <div className="side-logo-wrapper">
             <img src={fenegosidaLogo} className="side-logo-img" alt="Fenegosida" />
           </div>
 
-          <div className="logo-circle glass-panel">
+          <div className="logo-circle">
             <img src={logo} className="logo-img" alt="DPPL Logo" />
           </div>
 
-          <div className="side-logo-wrapper glass-panel">
+          <div className="side-logo-wrapper">
             <img src={kagosidaLogo} className="side-logo-img" alt="Kagosida" />
           </div>
         </div>
@@ -78,17 +94,17 @@ function App() {
         <h1 className="rate-title">Today's Silver Rate</h1>
 
         <div className="date-container">
-          <div className="date-box glass-panel">
+          <div className="date-box">
             <div className="day-text">{dates.nepali.day}</div>
             <div className="date-text">{dates.nepali.date}</div>
           </div>
-          <div className="date-box glass-panel">
+          <div className="date-box">
             <div className="day-text">{dates.english.day}</div>
             <div className="date-text">{dates.english.date}</div>
           </div>
         </div>
 
-        <div className="rate-grid glass-panel">
+        <div className="rate-grid">
           <div className="grid-header-main span-2">1 TOLA</div>
           <div className="grid-header-main span-2">10 GRAMS</div>
 

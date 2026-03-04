@@ -1,16 +1,38 @@
 /* Import Fredoka Font */
 @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&display=swap');
 
-/* Reset and apply font globally */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
   font-family: 'Fredoka', sans-serif;
-  font-weight: 700; /* Forces Fredoka Bold everywhere */
+  font-weight: 700;
 }
 
-/* Full screen animated background wrapper */
+/* --- THEME VARIABLES --- */
+.dark-theme {
+  --bg-color: #0f172a;        /* Deep slate background */
+  --card-bg: #1e293b;         /* Slightly lighter slate for the card */
+  --text-main: #f8fafc;       /* Bright white text */
+  --text-sub: #94a3b8;        /* Muted grayish-blue text */
+  --accent-color: #38bdf8;    /* Bright neon blue for highlights */
+  --border-color: #334155;    /* Subtle borders */
+  --grid-bg: #0f172a;         /* Dark background for inner boxes */
+  --logo-filter: brightness(0) invert(1); /* Turns dark logos white */
+}
+
+.light-theme {
+  --bg-color: #f1f5f9;        /* Soft gray-blue background */
+  --card-bg: #ffffff;         /* Pure white card */
+  --text-main: #0f172a;       /* Dark slate text */
+  --text-sub: #64748b;        /* Medium gray text */
+  --accent-color: #0284c7;    /* Deep blue for highlights */
+  --border-color: #e2e8f0;    /* Soft gray borders */
+  --grid-bg: #f8fafc;         /* Very light gray for inner boxes */
+  --logo-filter: none;        /* Keeps original logo colors */
+}
+
+/* --- BASE STYLES --- */
 .app-wrapper {
   min-height: 100vh;
   width: 100%;
@@ -18,41 +40,43 @@
   justify-content: center;
   align-items: center;
   padding: 20px;
-  /* Beautiful animated gradient (Deep Purple, Blue, Silver) */
-  background: linear-gradient(-45deg, #1e1b4b, #312e81, #1e3a8a, #475569);
-  background-size: 400% 400%;
-  animation: gradientBG 15s ease infinite;
-  color: #ffffff;
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-@keyframes gradientBG {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-/* --- THE MAIN GLASSMORPHISM CARD --- */
-.glass-container {
+.main-container {
   width: 100%;
   max-width: 650px;
-  background: rgba(255, 255, 255, 0.05); /* Very transparent white */
+  background-color: var(--card-bg);
   border-radius: 24px;
   padding: 40px;
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37); /* Drop shadow for depth */
-  backdrop-filter: blur(16px); /* The frosted glass effect */
-  -webkit-backdrop-filter: blur(16px); /* Safari support */
-  border: 1px solid rgba(255, 255, 255, 0.18); /* Shiny top/left border */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  border: 1px solid var(--border-color);
   text-align: center;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
-/* Reusable inner glass panel style for smaller components */
-.glass-panel {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
-  box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+/* --- THEME TOGGLE BUTTON --- */
+.theme-toggle-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+
+.theme-toggle-btn {
+  background-color: var(--grid-bg);
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.theme-toggle-btn:hover {
+  background-color: var(--border-color);
 }
 
 /* --- LOGOS --- */
@@ -69,46 +93,31 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 10px;
-  background: rgba(255, 255, 255, 0.85); 
-  border-radius: 16px;
-}
-
-.side-logo-img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-  filter: brightness(0) invert(1) drop-shadow(0 4px 6px rgba(0,0,0,0.3));
 }
 
 .logo-circle {
   width: 120px;
   height: 120px;
-  border-radius: 50%;
-  padding: 15px;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: rgba(255, 255, 255, 0.85);
 }
 
-.logo-img {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  filter: brightness(0) invert(1) drop-shadow(0 4px 10px rgba(0,0,0,0.4));
+.side-logo-img, .logo-img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  transition: filter 0.3s ease;
+  filter: var(--logo-filter); /* Magically updates based on theme */
 }
 
 /* --- TYPOGRAPHY --- */
 .rate-title {
-  font-size: 2.5rem;
-  letter-spacing: 1.5px;
+  font-size: 2.3rem;
+  letter-spacing: 1px;
   margin-bottom: 30px;
   text-transform: uppercase;
-  background: linear-gradient(to right, #ffffff, #cbd5e1);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: 0px 4px 15px rgba(255,255,255,0.2);
+  color: var(--text-main);
 }
 
 /* --- DATES --- */
@@ -122,24 +131,27 @@
 .date-box {
   flex: 1;
   padding: 15px;
-  transition: transform 0.3s ease;
+  background-color: var(--grid-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  transition: transform 0.2s ease, background-color 0.3s ease;
 }
 
 .date-box:hover {
-  transform: translateY(-5px);
+  transform: translateY(-2px);
 }
 
 .day-text {
-  font-size: 1.1rem;
-  color: #94a3b8; /* Light silver/blue */
+  font-size: 1rem;
+  color: var(--text-sub);
   text-transform: uppercase;
   letter-spacing: 1px;
 }
 
 .date-text {
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   margin-top: 5px;
-  color: #ffffff;
+  color: var(--text-main);
 }
 
 /* --- RATE GRID --- */
@@ -148,6 +160,10 @@
   grid-template-columns: repeat(4, 1fr);
   gap: 15px;
   padding: 25px;
+  background-color: var(--grid-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  transition: background-color 0.3s ease;
 }
 
 .span-2 {
@@ -155,66 +171,60 @@
 }
 
 .grid-header-main {
-  font-size: 1.6rem;
-  color: #fbbf24; /* A soft gold/yellow to contrast the blue background */
+  font-size: 1.5rem;
+  color: var(--accent-color);
   padding-bottom: 10px;
-  border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+  border-bottom: 2px solid var(--border-color);
   margin-bottom: 10px;
 }
 
 .grid-header-sub {
-  font-size: 1rem;
-  color: #cbd5e1;
+  font-size: 0.9rem;
+  color: var(--text-sub);
   text-transform: uppercase;
   letter-spacing: 1px;
 }
 
 .grid-value {
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   padding: 15px 5px;
-  color: #ffffff;
-  background: rgba(0, 0, 0, 0.2);
+  color: var(--text-main);
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
   border-radius: 12px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-/* Give the 'Sale' price a slight emphasis */
+/* Highlight the SALE prices */
 .grid-value.highlight {
-  background: rgba(255, 255, 255, 0.15);
-  color: #38bdf8; /* Light neon blue */
-  box-shadow: 0 0 15px rgba(56, 189, 248, 0.2);
+  color: var(--accent-color);
+  border-color: var(--accent-color);
 }
 
-/* Responsive Design for Mobile */
+/* Responsive Design */
 @media (max-width: 600px) {
-  .glass-container {
+  .main-container {
     padding: 20px;
   }
-  
   .rate-title {
     font-size: 1.8rem;
   }
-
   .logo-circle {
     width: 90px;
     height: 90px;
   }
-
   .side-logo-wrapper {
     width: 60px;
     height: 60px;
   }
-
   .date-container {
     flex-direction: column;
   }
-
   .grid-header-main {
     font-size: 1.3rem;
   }
-
   .grid-value {
     font-size: 1.1rem;
   }
