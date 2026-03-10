@@ -7,8 +7,6 @@ import logo from './logo.png';
 const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
 function App() {
-  const [isDarkMode, setIsDarkMode] = useState(true);
-
   const [dates, setDates] = useState({
     english: { day: '', date: '' },
     nepali: { day: '', date: '' }
@@ -56,20 +54,9 @@ function App() {
     fetchRates();
   }, []);
 
-  const toggleTheme = () => {
-    setIsDarkMode(!isDarkMode);
-  };
-
   return (
-    <div className={`app-wrapper ${isDarkMode ? 'dark-theme' : 'light-theme'}`}>
+    <div className="app-wrapper">
       <div className="main-container">
-        
-        {/* THEME TOGGLE BUTTON */}
-        <div className="theme-toggle-wrapper">
-          <button className="theme-toggle-btn" onClick={toggleTheme}>
-            {isDarkMode ? '☀️ Light Mode' : '🌙 Dark Mode'}
-          </button>
-        </div>
 
         {/* HEADER: BIG DPPL LOGO */}
         <div className="logo-container">
