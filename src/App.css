@@ -17,18 +17,18 @@
   justify-content: center;
   align-items: center;
   padding: 20px;
-  background-color: #f1f5f9; /* Soft gray-blue background */
-  color: #0f172a; /* Dark slate text */
+  background-color: #000000; /* Deep black background */
+  color: #ffffff; /* Pure white text for maximum contrast */
 }
 
 .main-container {
   width: 100%;
   max-width: 650px;
-  background-color: #ffffff; /* Pure white card for maximum contrast */
+  background-color: #121212; /* Slightly elevated dark gray for the card */
   border-radius: 24px;
   padding: 40px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); /* Soft shadow */
-  border: 1px solid #e2e8f0;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8); /* Stronger shadow */
+  border: 1px solid #333333; /* Subtle dark border */
   text-align: center;
 }
 
@@ -52,7 +52,8 @@
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
-  /* Removed CSS filter so your logo stays its original color */
+  /* Turns the dark logo white so it is visible on the black background */
+  filter: brightness(0) invert(1); 
 }
 
 /* --- TYPOGRAPHY --- */
@@ -61,7 +62,7 @@
   letter-spacing: 1px;
   margin-bottom: 30px;
   text-transform: uppercase;
-  color: #0f172a;
+  color: #ffffff;
 }
 
 /* --- DATES --- */
@@ -75,8 +76,8 @@
 .date-box {
   flex: 1;
   padding: 15px;
-  background-color: #f8fafc; /* Very light gray */
-  border: 1px solid #e2e8f0;
+  background-color: #1a1a1a; /* Dark gray inside box */
+  border: 1px solid #333333;
   border-radius: 16px;
   transition: transform 0.2s ease;
 }
@@ -87,7 +88,7 @@
 
 .day-text {
   font-size: 1rem;
-  color: #64748b; /* Medium gray */
+  color: #9ca3af; /* Light gray */
   text-transform: uppercase;
   letter-spacing: 1px;
 }
@@ -95,7 +96,7 @@
 .date-text {
   font-size: 1.3rem;
   margin-top: 5px;
-  color: #0f172a;
+  color: #ffffff;
 }
 
 /* --- RATE GRID --- */
@@ -104,8 +105,8 @@
   grid-template-columns: repeat(4, 1fr);
   gap: 15px;
   padding: 25px;
-  background-color: #f8fafc;
-  border: 1px solid #e2e8f0;
+  background-color: #1a1a1a;
+  border: 1px solid #333333;
   border-radius: 16px;
 }
 
@@ -115,15 +116,15 @@
 
 .grid-header-main {
   font-size: 1.5rem;
-  color: #0284c7; /* Deep readable blue */
+  color: #38bdf8; /* Bright neon blue for high contrast headers */
   padding-bottom: 10px;
-  border-bottom: 2px solid #e2e8f0;
+  border-bottom: 2px solid #333333;
   margin-bottom: 10px;
 }
 
 .grid-header-sub {
   font-size: 0.9rem;
-  color: #64748b;
+  color: #9ca3af;
   text-transform: uppercase;
   letter-spacing: 1px;
 }
@@ -131,9 +132,9 @@
 .grid-value {
   font-size: 1.3rem;
   padding: 15px 5px;
-  color: #0f172a;
-  background-color: #ffffff;
-  border: 1px solid #e2e8f0;
+  color: #ffffff;
+  background-color: #000000;
+  border: 1px solid #333333;
   border-radius: 12px;
   display: flex;
   justify-content: center;
@@ -141,8 +142,8 @@
 }
 
 .grid-value.highlight {
-  color: #0284c7;
-  border-color: #0284c7;
+  color: #38bdf8;
+  border-color: #38bdf8;
   font-weight: bold;
 }
 
@@ -150,7 +151,7 @@
 .source-text {
   margin-top: 30px;
   font-size: 0.85rem;
-  color: #64748b;
+  color: #9ca3af;
   text-transform: uppercase;
   letter-spacing: 1.5px;
   font-weight: 500;
