@@ -17,7 +17,7 @@ const DEDUCTION_PERCENTAGE = 0.04; // 4% Deduction for Purchase
 
 // --- HELPER: ROUNDING RULES ---
 // 1. Tola: Round to nearest whole number (e.g., 5683.2 -> 5683)
-const cleanTola = (num) => Math.round(num);
+const cleanTola = (num) => Math.round(num * 2) / 2;
 
 // 2. 10 Grams: Round to nearest 0.50 (e.g., 4872.48 -> 4872.50)
 const cleanGram = (num) => Math.round(num * 2) / 2;
@@ -136,8 +136,8 @@ app.get('/api/rates', (req, res) => {
     const gramBuy = cleanGram(rawGramBuy);
 
     res.json({
-        tolaSale: `Rs. ${tolaSale.toLocaleString(undefined, {minimumFractionDigits: 0, maximumFractionDigits: 2})}`,
-        tolaBuy: `Rs. ${tolaBuy.toLocaleString(undefined, {minimumFractionDigits: 0, maximumFractionDigits: 2})}`,
+        tolaSale: `Rs. ${tolaSale.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`,
+        tolaBuy: `Rs. ${tolaBuy.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`,
         gramSale: `Rs. ${gramSale.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`,
         gramBuy: `Rs. ${gramBuy.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`,
         source: cachedData.source,
